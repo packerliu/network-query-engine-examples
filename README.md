@@ -1,5 +1,5 @@
 
-# Forward Data Model Export
+# Forward Data Model Export [![Build Status](https://travis-ci.com/forwardnetworks/forward-api-examples.svg?token=F2RHJ9964SXT8kpW4Ns5&branch=master)](https://travis-ci.com/forwardnetworks/forward-api-examples)
 
 Forward Networks Data Model Export (DME) provides a simple API that exposes information about the network as JSON data in a
 fully-parsed form. The information is normalized and presented uniformly across devices from different vendors. The
@@ -75,13 +75,16 @@ curl --user myusername:mypassword https://fwd.app/api/snapshots/100/graphql -X P
 
 ## Queries via Python
 
-This repository includes a simple client library that can be used to run queries. Install the library like this:
-```
-sudo pip install .
-```
+This repository includes a simple client library that can be used to run queries. The library is verified to work on
+Python versions 2.6 and 2.7.
 
-Now you can run the examples in the examples/ directory. For example, try navigating to the examples directory, and then
-run:
+Install the library like this:
+```
+pip install -r requirements.txt .
+```
+Root permissions may be required to run the above command.
+
+Now you can run the examples in the examples/ directory. For example, in the examples directory, run:
 ```
 python mismatched_interfaces.py https://fwd.app <yourUsername> <yourPassword> <yourSnapshotId>
 ```
