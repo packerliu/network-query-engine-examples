@@ -16,7 +16,7 @@ This repository provides examples to help you get started using Data Model Expor
 
 The quickest way to get started is to try out sample queries against a demo network on [Forward App](https://fwd.app/). Note that if
 you do not already have an account there, you can
-[request an account here](https://www.forwardnetworks.com/network-mapping-software/).
+[request an account here](https://www.forwardnetworks.com/request-a-demo/).
 
 Browse to https://fwd.app/data-model-explorer. Use network and snapshot selectors in the toolbar to select the demo
 network and its snapshot. Now try out the following simple query, by dropping this into the left hand-side pane and
