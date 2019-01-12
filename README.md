@@ -1,5 +1,5 @@
 
-# Forward Data Model Export [![Build Status](https://travis-ci.com/forwardnetworks/forward-api-examples.svg?token=F2RHJ9964SXT8kpW4Ns5&branch=master)](https://travis-ci.com/forwardnetworks/forward-api-examples)
+# Forward Data Model Export [![Build Status](https://travis-ci.com/forwardnetworks/forward-data-model-export-examples.svg?token=F2RHJ9964SXT8kpW4Ns5&branch=master)](https://travis-ci.com/forwardnetworks/forward-data-model-export-examples)
 
 Forward Networks Data Model Export (DME) provides a simple API that exposes information about the network as JSON data in a
 fully-parsed form. The information is normalized and presented uniformly across devices from different vendors. The
