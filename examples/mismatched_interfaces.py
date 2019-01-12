@@ -3,7 +3,6 @@
 """Finds interfaces whose configured and operational states differ."""
 
 from forward_data_model_export_client import FwdApi, printTable
-import sys
 import argparse
 
 # Parse command-line arguments
