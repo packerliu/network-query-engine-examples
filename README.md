@@ -10,6 +10,22 @@ fleet of devices in their network.
 
 This repository provides examples to help you get started using Data Model Export.
 
+# Data Coverage
+
+The initial data set covered by Data Model Export includes:
+* Basic device info including device name, vendor, platform, and os.
+* Interface data.
+* IPv4 and IPv6 RIBs across all VRFs.
+* Subset of BGP RIBs (`adj-rib-in` and `adj-rib-out`).
+* Topology data via fields that link interfaces to other connected interfaces.
+
+The [Data Model Explorer](https://fwd.app/data-model-explorer) (explained below) provided by Forward Network instances
+provides an easy to use tool to interactively view the full schema details. However, you can also
+[see the full schema offline here](network-schema.md).
+
+Data Model Export will include more data over time. If the information that you need is not in the schema, please open
+an issue and request the data.
+
 # Getting Started
 
 ## Try Queries on the Demo Network
@@ -117,11 +133,7 @@ the `links` field of an interface that adds topology information to the interfac
 6. DME takes advantage of GraphQL's *graph* model to provide fields on objects that link (aka *join*) to related
 information. For example, a field of an interface links to other interface to which it is connected. This field
 provides the related interface object, not just its name.
-
-Forward Networks DME only covers a subset of OpenConfig models. Specifically, it covers the following:
-1. Interface data
-2. Network instance data
-3. BGP data (presently limited `adj-rib-in` and `adj-rib-out`)
+7. Forward Networks DME only covers a subset of OpenConfig models. [More info on included data.](#Data-Coverage)
 
 # Contributing
 
