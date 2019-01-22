@@ -2,7 +2,7 @@
 
 """Finds interfaces whose configured and operational states differ."""
 
-from forward_data_model_export_client import FwdApi, printTable
+from forward_nqe_client import FwdApi, printTable
 import argparse
 
 # Parse command-line arguments
@@ -29,7 +29,7 @@ parser.add_argument(
     action="store_true")
 args = parser.parse_args()
 
-# API to query Forward Data Model Export GraphQL API
+# API to query Forward NQE API
 api = FwdApi(args.url, (args.username, args.password), args.verify)
 
 # Query to get device interfaces and their states.

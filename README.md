@@ -1,20 +1,20 @@
 
-# Forward Networks Data Model Export [![Build Status](https://travis-ci.com/forwardnetworks/forward-data-model-export-examples.svg?token=F2RHJ9964SXT8kpW4Ns5&branch=master)](https://travis-ci.com/forwardnetworks/forward-data-model-export-examples)
+# Network Query Engine Examples [![Build Status](https://travis-ci.com/forwardnetworks/network-query-engine-examples.svg?token=F2RHJ9964SXT8kpW4Ns5&branch=master)](https://travis-ci.com/forwardnetworks/network-query-engine-examples)
 
-Forward Networks Data Model Export (DME) provides a simple API that exposes information about the network as JSON data in a
+Network Query Engine (NQE) by Forward Networks provides a simple API that exposes information about the network as JSON data in a
 fully-parsed form. The information is normalized and presented uniformly across devices from different vendors. The
 exported data structures are standards-aligned with [OpenConfig](http://www.openconfig.net/) (details below), and
 all data is available through a [GraphQL](https://graphql.org/) API. This API allows network operators to
 easily develop scripts - for example, to perform sanity checks or to display information - that work across the entire
 fleet of devices in their network.
 
-This repository helps you get started with Data Model Export. In particular, it walks you through the process of
+This repository helps you get started with NQE. In particular, it walks you through the process of
 interactively crafting queries against a Forward Networks instance and explains the request and response structure of the
 API. This repository also includes a simple Python client library that you can use to write Python scripts that query
-and consume DME data. This README describes how to install that library and provides example scripts that use this
+and consume NQE data. This README describes how to install that library and provides example scripts that use this
 client library in interesting ways.
 
-If you'd like to start out with more background on Data Model Export, please check out our [Data Model Export blog post](https://app.forwardnetworks.com/TBD).
+If you'd like to start out with more background on NQE, please check out [this blog post](https://www.forwardnetworks.com/blog/network-query-engine).
 
 # Getting Started
 
@@ -22,9 +22,9 @@ If you'd like to start out with more background on Data Model Export, please che
 
 The quickest way to get started is to try out sample queries against a demo network on [Forward App](https://fwd.app/). Note that if
 you do not already have an account there, you can
-[request an account here](https://www.forwardnetworks.com/request-a-demo/).
+[request an account here](https://www.forwardnetworks.com/free-trial/).
 
-Browse to the [Data Model Explorer in app](https://fwd.app/data-model-explorer). Use the network and snapshot selectors in the toolbar to select the demo
+Browse to the [Network Query Explorer in app](https://fwd.app/network-query-explorer). Use the network and snapshot selectors in the toolbar to select the demo
 network and its snapshot. Now try out the following simple query, by dropping the following query into the left hand-side pane and
 running the play button:
 ```
@@ -59,25 +59,7 @@ documentation, by opening the "Docs" pane in the top-right-hand side toolbar.
 Note that you can try out these queries against your own network snapshot by choosing the appropriate network and
 snapshot on the query window.
 
-## Queries via curl
-
-You can also query DME using curl (or any other tool that can issue HTTP requests). The API is available by HTTP POST to
-the following URL
-```
-https://<ForwardInstance>/api/snapshots/<SnapshotId>/graphql
-```
-The body of the POST should follow the [standard GraphQL request JSON structure](https://graphql.org/learn/serving-over-http/#post-request). Specifically, it should include a query field to hold the query string, and an optional variables field to pass variables used by the query ([see here for background on GraphQL variables](https://graphql.org/learn/queries/#variables)):
-```
-{ "query": "<your query>", "variables": [{"var1", "value1"}, ..., {"varn", "valuen"}]}
-```
-
-For example, you can issue the query shown previously via curl against https://fwd.app as follows:
-
-```
-curl --user myusername:mypassword https://fwd.app/api/snapshots/100/graphql -X POST -H "Content-Type: application/json" -d '{"query": "{ devices { name } }"}'
-```
-
-## Queries via Python
+## Use the Sample Python NQE Client
 
 This repository includes a simple client library that can be used to run queries. The library is verified to work on
 Python versions 2.6 and 2.7.
@@ -103,11 +85,11 @@ be configured up, but can be operationally down for a variety of reasons. This s
 differ, so that an operator can do further investigation.
 * [Find IP addresses that are assigned to more than one interface within a VRF.](examples/ip_uniqueness.py) Assigning
 a single IP address to multiple interfaces in a network can often lead to problems. This script queries Forward Networks
-DME and finds all violations of this problem, showing the interfaces on which each duplicate IP address is assigned.
+NQE and finds all violations of this problem, showing the interfaces on which each duplicate IP address is assigned.
 
 # Data Coverage
 
-The initial data set covered by Data Model Export includes:
+The initial data set covered by NQE includes:
 * Basic device info including device name, vendor, platform, and os.
 * Interface data.
 * IPv4 and IPv6 RIBs across all VRFs.
@@ -118,31 +100,52 @@ The [Data Model Explorer](https://fwd.app/data-model-explorer) (explained below)
 provides an easy to use tool to interactively view the full schema details. However, you can also
 [see the full schema offline here](network-schema.md).
 
-Data Model Export will include more data over time. If the information that you need is not in the schema, please open
+NQE will include more data over time. If the information that you need is not in the schema, please open
 an issue and request the data.
 
 # Relationship to OpenConfig
 
-Forward Networks DME is *aligned* with OpenConfig, but is not literally the same data model as any of the various
-JSON representations of the OpenConfig YANG data models. Rather, Forward Networks DME can be seen as an idiomatic
+Forward Networks NQE is *aligned* with OpenConfig, but is not literally the same data model as any of the various
+JSON representations of the OpenConfig YANG data models. Rather, Forward Networks NQE can be seen as an idiomatic
 representation of OpenConfig as a GraphQL data source: we have adapted the OpenConfig YANG data models to fit within
 the constraints of GraphQL, to adapt to the conventions prevalent within GraphQL APIs, and to take advantage of the
 powerful query features available in GraphQL.
 
-Specifically, Forward Networks DME differs from OpenConfig models in the following ways:
+Specifically, Forward Networks NQE differs from OpenConfig models in the following ways:
 1. Names are camel-cased. Dashes are not permitted in GraphQL.
 2. The config and state hierarchy is squashed out, similar to "path-compression" in
 [ygot](https://github.com/openconfig/ygot/blob/master/docs/design.md#openconfig-path-compression).
 3. OpenConfig sometimes represents some complex entity as a string with specific format, such as vlan range in the
-`x..y` format. DME chooses to model these as structured objects.
-4. Some collections of elements, such as BGP routes, are "paged" in DME because they are often very large. This paging
+`x..y` format. NQE chooses to model these as structured objects.
+4. Some collections of elements, such as BGP routes, are "paged" in NQE because they are often very large. This paging
 allows clients to ask for a page of routes at a time.
 5. Additional data is sometimes added, such as device platform information under the `platform` field of `Device`, or
 the `links` field of an interface that adds topology information to the interface object information.
-6. DME takes advantage of GraphQL's *graph* model to provide fields on objects that link (aka *join*) to related
+6. NQE takes advantage of GraphQL's *graph* model to provide fields on objects that link (aka *join*) to related
 information. For example, a field of an interface links to other interface to which it is connected. This field
 provides the related interface object, not just its name.
-7. Forward Networks DME only covers a subset of OpenConfig models. [More info on included data.](#Data-Coverage)
+7. Forward Networks NQE only covers a subset of OpenConfig models. [More info on included data.](#Data-Coverage)
+
+
+# API Details
+
+The API is available via HTTP POST to the following URL
+```
+https://<ForwardInstance>/api/snapshots/<SnapshotId>/graphql
+```
+The body of the POST should follow the [standard GraphQL request JSON structure](https://graphql.org/learn/serving-over-http/#post-request). Specifically, it should include a query field to hold the query string, and an optional variables field to pass variables used by the query ([see here for background on GraphQL variables](https://graphql.org/learn/queries/#variables)):
+```
+{ "query": "<your query>", "variables": [{"var1", "value1"}, ..., {"varn", "valuen"}]}
+```
+
+The API is authenticated via basic auth.
+
+For example, you can issue the query shown previously via curl against https://fwd.app as follows:
+
+```
+curl --user myusername:mypassword https://fwd.app/api/snapshots/100/graphql -X POST -H "Content-Type: application/json" -d '{"query": "{ devices { name } }"}'
+```
+
 
 # Contributing
 
@@ -163,4 +166,4 @@ pull request. Specifically, do:
 # Further reading
 
 * [Product docs](https://app.forwardnetworks.com/docs/applications/data_model_export/)
-* [Data Model Export Blog](https://app.forwardnetworks.com/TBD)
+* [Network Query Engine Blog Post](https://www.forwardnetworks.com/blog/network-query-engine)

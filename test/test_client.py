@@ -1,4 +1,4 @@
-from forward_data_model_export_client import FwdApi
+from forward_nqe_client import FwdApi
 import os
 
 query = '''

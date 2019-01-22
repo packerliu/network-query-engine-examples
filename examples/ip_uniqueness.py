@@ -2,7 +2,7 @@
 
 """Finds ips that are applied to multiple interfaces within a VRF."""
 
-from forward_data_model_export_client import FwdApi, printTable, formatIpAddr
+from forward_nqe_client import FwdApi, printTable, formatIpAddr
 from collections import defaultdict
 import argparse
 
@@ -30,7 +30,7 @@ parser.add_argument(
     action="store_true")
 args = parser.parse_args()
 
-# API to query Forward Data Model Export GraphQL API
+# API to query Forward NQE API
 api = FwdApi(args.url, (args.username, args.password), args.verify)
 
 # Query to get device interface and VRF data.
@@ -58,9 +58,9 @@ query = '''
     # VRF name and associated interface & subinterface
     networkInstances {
       name
-      interfaceNames {
-        interface
-        subInterface
+      interfaces {
+        interfaceName
+        subInterfaceName
       }
     }
   }
@@ -97,8 +97,9 @@ for dev in dataset['devices']:
     devName = dev['name']
     if not (devName in devicesInBackupOpMode):
         for vrf in dev['networkInstances']:
-            for iface in vrf['interfaceNames']:
-                location = (devName, iface['interface'], iface['subInterface'])
+            for iface in vrf['interfaces']:
+                location = (devName, iface['interfaceName'],
+                            iface['subInterfaceName'])
                 for addr in ifaceToIpsMap.get(location, []):
                     address = (addr['ip'], addr['prefixLength'])
                     vrfSubnetToIfaceMap[(vrf['name'], address)].add(location)

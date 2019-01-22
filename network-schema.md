@@ -17,7 +17,7 @@
     * [Device](#device)
     * [Ethernet](#ethernet)
     * [Iface](#iface)
-    * [InterfaceName](#interfacename)
+    * [IfaceSubIface](#ifacesubiface)
     * [IpEntry](#ipentry)
     * [IpEntryConnection](#ipentryconnection)
     * [IpUnicast](#ipunicast)
@@ -171,11 +171,11 @@
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>adjRibInPre</strong></td>
+<td colspan="2" valign="top"><strong>adjRibInPost</strong></td>
 <td valign="top"><a href="#afisafineighboradjrib">AfiSafiNeighborAdjRib</a></td>
 <td>
 
- Per-neighbor table containing the NLRI updates received from the neighbor before any local input policy rules or filters have been applied.  This can be considered the "raw" updates from the neighbor.
+ This is a per-neighbor table containing the routes received from the neighbor that are eligible for best-path selection after local input policy rules have been applied. Note that on some platforms, these routes may not show import policy modifications.
 
 </td>
 </tr>
@@ -761,7 +761,7 @@
 </tbody>
 </table>
 
-### InterfaceName
+### IfaceSubIface
 
  The names of the interface and subinterface that are associated with the network instance.
 
@@ -776,12 +776,12 @@
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>interface</strong></td>
+<td colspan="2" valign="top"><strong>interfaceName</strong></td>
 <td valign="top"><a href="#string">String</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>subInterface</strong></td>
+<td colspan="2" valign="top"><strong>subInterfaceName</strong></td>
 <td valign="top"><a href="#string">String</a></td>
 <td></td>
 </tr>
@@ -1045,8 +1045,8 @@
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>interfaceNames</strong></td>
-<td valign="top">[<a href="#interfacename">InterfaceName</a>]!</td>
+<td colspan="2" valign="top"><strong>interfaces</strong></td>
+<td valign="top">[<a href="#ifacesubiface">IfaceSubIface</a>]!</td>
 <td>
 
  The interfaces that are associated with this network instance.
