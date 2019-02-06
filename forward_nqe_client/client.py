@@ -4,7 +4,7 @@ import json
 
 
 def runQueryInternal(snapshotId, q, baseUrl, auth, verify):
-    url = baseUrl + '/api/snapshots/' + str(snapshotId) + '/graphql'
+    url = baseUrl.rstrip("/") + '/api/snapshots/' + str(snapshotId) + '/graphql'
     headers = {'Accept': 'application/json',
                'Content-Type': 'application/json'}
     return requests.post(url, verify=verify, auth=auth, data=json.dumps(q),
