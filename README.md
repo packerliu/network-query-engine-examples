@@ -24,7 +24,7 @@ The quickest way to get started is to try out sample queries against a demo netw
 you do not already have an account there, you can
 [request an account here](https://www.forwardnetworks.com/free-trial/).
 
-Browse to the [Network Query Explorer in app](https://fwd.app/network-query-explorer) (Note: This link is not currently available, but should be available within 1-2 days.). Use the network and snapshot selectors in the toolbar to select the demo
+Browse to the [Network Query Explorer in app](https://fwd.app/network-query-explorer). Use the network and snapshot selectors in the toolbar to select the demo
 network and its snapshot. Now try out the following simple query, by dropping the following query into the left hand-side pane and
 running the play button:
 ```
