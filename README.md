@@ -80,6 +80,7 @@ python mismatched_interfaces.py https://fwd.app <yourUsername> <yourPassword> <y
 The repository provides the following example queries and scripts:
 * [Show names of all devices.](examples/show_all_device_names.py) This is a simple example to simply list all devices
 in a network.
+* [Show unique platforms.](examples/show_unique_platforms.py) This script shows the unique Vendor, model, and OS combinations in a network.
 * [Find interfaces with clashing configured and operational status.](examples/mismatched_interfaces.py) Interfaces can
 be configured up, but can be operationally down for a variety of reasons. This script finds cases where the states
 differ, so that an operator can do further investigation.
