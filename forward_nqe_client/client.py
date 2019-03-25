@@ -47,7 +47,7 @@ def printTable(header, rows):
     allRows = [header]
     allRows.extend(rows)
     printTableNoHeader(allRows)
-    print len(rows), "rows"
+    print("%d rows" % len(rows))
 
 
 def printTableNoHeader(rows):
@@ -63,4 +63,4 @@ def printTableNoHeader(rows):
     # print columns with the maximum width
     for columns in rows:
         cols = [str(c).ljust(w) for w, c in zip(wcolumns, columns)]
-        print "| {} |".format(" | ".join(list(cols)))
+        print("| {} |".format(" | ".join(list(cols))))

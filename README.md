@@ -62,7 +62,7 @@ snapshot on the query window.
 ## Use the Sample Python NQE Client
 
 This repository includes a simple client library that can be used to run queries. The library is verified to work on
-Python versions 2.6 and 2.7.
+Python versions 2.6, 2.7, 3.4, 3.5 and 3.6.
 
 Install the library like this:
 ```
