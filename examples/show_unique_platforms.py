@@ -3,7 +3,7 @@
 
 
 import requests
-from forward_data_model_export_client import FwdApi, printTable, formatIpAddr
+from forward_nqe_client import FwdApi, printTable, formatIpAddr
 from collections import defaultdict
 import argparse
 requests.packages.urllib3.disable_warnings()
