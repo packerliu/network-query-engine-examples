@@ -186,6 +186,12 @@ query IntrospectionQuery {
     }
 ```
 
+The picture below shows a simple query to show device platform details:
+![NQE Postman](/images/nqe-postman.png?width=800px)
+
+Select JSON format from the drop down menu (step 3 in the picture above) for a
+prettier data visualization.
+
 # Examples
 
 The repository provides the following example queries and scripts:
