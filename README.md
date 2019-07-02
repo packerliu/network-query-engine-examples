@@ -18,6 +18,13 @@ If you'd like to start out with more background on NQE, please check out [this b
 
 # Getting Started
 
+You can use any GraphQL client to consume NQE data.
+To get started you can use one of these options:
+* [Try Queries on the Demo Network](#demo-network)
+* [Use the Sample Python NQE Client](#nqe-client)
+* [Use Postman](#postman)
+
+<a id="demo-network"></a>
 ## Try Queries on the Demo Network
 
 The quickest way to get started is to try out sample queries against a demo network on [Forward App](https://fwd.app/). Note that if
@@ -59,6 +66,7 @@ documentation, by opening the "Docs" pane in the top-right-hand side toolbar.
 Note that you can try out these queries against your own network snapshot by choosing the appropriate network and
 snapshot on the query window.
 
+<a id="nqe-client"></a>
 ## Use the Sample Python NQE Client
 
 This repository includes a simple client library that can be used to run queries. The library is verified to work on
@@ -73,6 +81,109 @@ Root permissions may be required to run the above command.
 Now you can run the examples in the examples/ directory. For example, in the examples directory, run:
 ```
 python mismatched_interfaces.py https://fwd.app <yourUsername> <yourPassword> <yourSnapshotId>
+```
+<a id="postman"></a>
+## Use Postman
+
+[Postman v7.2 or later supports GraphQL](https://blog.getpostman.com/2019/06/18/postman-v7-2-supports-graphql/?mkt_tok=eyJpIjoiWkdJMk1EZ3hPV0V3WVdOaSIsInQiOiJabDcxSUlIUTRXU3JNWlh2Tkx0ekdCT3VBSnNHTG1TWmkrQkhDOGhLNHlsamI0U2hKdHdzZU9mSlJ3XC9xUmNDVVp6dXJwdW9XQUFiczZnSDg1T3BQMnYrazNqXC8rYUlGeGFsXC9JMTBORGhadWtmUWtcLzRWb0lZbTFHaGVlaGg2NEEifQ%3D%3D).  
+Unfortunately, it doesn't support GraphQL Introspection, a key feature that allows to populate the schema inspector, provides autocomplete and enables to easily build schema documentation.
+
+The schema can be [imported manually](https://learning.getpostman.com/docs/postman/sending_api_requests/graphql/#importing-graphql-schemas) instead, providing autocomplete but no documentation.
+
+The schema can be exported from the Forward Platform using tools like [get-graphql-schema](https://www.npmjs.com/package/get-graphql-schema) or by running the following Introspection query in the [Network Query Explorer](https://fwd.app/network-query-explorer):
+
+```
+query IntrospectionQuery {
+      __schema {
+        queryType { name }
+        mutationType { name }
+        subscriptionType { name }
+        types {
+          ...FullType
+        }
+        directives {
+          name
+          description
+          locations
+          args {
+            ...InputValue
+          }
+        }
+      }
+    }
+
+    fragment FullType on __Type {
+      kind
+      name
+      description
+      fields(includeDeprecated: true) {
+        name
+        description
+        args {
+          ...InputValue
+        }
+        type {
+          ...TypeRef
+        }
+        isDeprecated
+        deprecationReason
+      }
+      inputFields {
+        ...InputValue
+      }
+      interfaces {
+        ...TypeRef
+      }
+      enumValues(includeDeprecated: true) {
+        name
+        description
+        isDeprecated
+        deprecationReason
+      }
+      possibleTypes {
+        ...TypeRef
+      }
+    }
+
+    fragment InputValue on __InputValue {
+      name
+      description
+      type { ...TypeRef }
+      defaultValue
+    }
+
+    fragment TypeRef on __Type {
+      kind
+      name
+      ofType {
+        kind
+        name
+        ofType {
+          kind
+          name
+          ofType {
+            kind
+            name
+            ofType {
+              kind
+              name
+              ofType {
+                kind
+                name
+                ofType {
+                  kind
+                  name
+                  ofType {
+                    kind
+                    name
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    }
 ```
 
 # Examples
