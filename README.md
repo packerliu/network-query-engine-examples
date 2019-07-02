@@ -85,7 +85,7 @@ python mismatched_interfaces.py https://fwd.app <yourUsername> <yourPassword> <y
 <a id="postman"></a>
 ## Use Postman
 
-[Postman v7.2 or later supports GraphQL](https://blog.getpostman.com/2019/06/18/postman-v7-2-supports-graphql/?mkt_tok=eyJpIjoiWkdJMk1EZ3hPV0V3WVdOaSIsInQiOiJabDcxSUlIUTRXU3JNWlh2Tkx0ekdCT3VBSnNHTG1TWmkrQkhDOGhLNHlsamI0U2hKdHdzZU9mSlJ3XC9xUmNDVVp6dXJwdW9XQUFiczZnSDg1T3BQMnYrazNqXC8rYUlGeGFsXC9JMTBORGhadWtmUWtcLzRWb0lZbTFHaGVlaGg2NEEifQ%3D%3D).  
+Postman is a popular HTTP API testing and development environment. Mostly used for REST APIs, now [Postman supports GraphQL](https://blog.getpostman.com/2019/06/18/postman-v7-2-supports-graphql/?mkt_tok=eyJpIjoiWkdJMk1EZ3hPV0V3WVdOaSIsInQiOiJabDcxSUlIUTRXU3JNWlh2Tkx0ekdCT3VBSnNHTG1TWmkrQkhDOGhLNHlsamI0U2hKdHdzZU9mSlJ3XC9xUmNDVVp6dXJwdW9XQUFiczZnSDg1T3BQMnYrazNqXC8rYUlGeGFsXC9JMTBORGhadWtmUWtcLzRWb0lZbTFHaGVlaGg2NEEifQ%3D%3D) as well.  
 Unfortunately, it doesn't support GraphQL Introspection, a key feature that allows to populate the schema inspector, provides autocomplete and enables to easily build schema documentation.
 
 The schema can be [imported manually](https://learning.getpostman.com/docs/postman/sending_api_requests/graphql/#importing-graphql-schemas) instead, providing autocomplete but no documentation.
@@ -186,7 +186,7 @@ query IntrospectionQuery {
     }
 ```
 
-The picture below shows a simple query to show device platform details:
+The picture below shows a simple query to get device platform details:
 ![NQE Postman](/images/nqe-postman.png?width=800px)
 
 Select JSON format from the drop down menu (step 3 in the picture above) for a
