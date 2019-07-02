@@ -88,9 +88,9 @@ python mismatched_interfaces.py https://fwd.app <yourUsername> <yourPassword> <y
 Postman is a popular HTTP API testing and development environment. Mostly used for REST APIs, now [Postman supports GraphQL](https://blog.getpostman.com/2019/06/18/postman-v7-2-supports-graphql/?mkt_tok=eyJpIjoiWkdJMk1EZ3hPV0V3WVdOaSIsInQiOiJabDcxSUlIUTRXU3JNWlh2Tkx0ekdCT3VBSnNHTG1TWmkrQkhDOGhLNHlsamI0U2hKdHdzZU9mSlJ3XC9xUmNDVVp6dXJwdW9XQUFiczZnSDg1T3BQMnYrazNqXC8rYUlGeGFsXC9JMTBORGhadWtmUWtcLzRWb0lZbTFHaGVlaGg2NEEifQ%3D%3D) as well.  
 Unfortunately, it doesn't support GraphQL Introspection, a key feature that allows to populate the schema inspector, provides autocomplete and enables to easily build schema documentation.
 
-The schema can be [imported manually](https://learning.getpostman.com/docs/postman/sending_api_requests/graphql/#importing-graphql-schemas) instead, providing autocomplete but no documentation.
+The GraphQL schema can be [imported manually](https://learning.getpostman.com/docs/postman/sending_api_requests/graphql/#importing-graphql-schemas) instead, providing autocomplete but no documentation. [GraphQL Schema Definition Language](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51) (SDL) is the only format supported.
 
-The schema can be exported from the Forward Platform using tools like [get-graphql-schema](https://www.npmjs.com/package/get-graphql-schema) or by running the following Introspection query in the [Network Query Explorer](https://fwd.app/network-query-explorer):
+The schema in SDL format can be exported from the Forward Platform using tools like [get-graphql-schema](https://www.npmjs.com/package/get-graphql-schema) or by running the following Introspection query in the [Network Query Explorer](https://fwd.app/network-query-explorer) and converting the JSON output to the SDL format using tools like [graphql-introspection-json-to-sdl](https://www.npmjs.com/package/graphql-introspection-json-to-sdl):
 
 ```
 query IntrospectionQuery {
