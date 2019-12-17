@@ -10,22 +10,31 @@
     * [AfiSafiNeighborAdjRib](#afisafineighboradjrib)
     * [Afts](#afts)
     * [Aggregation](#aggregation)
+    * [ArpEntry](#arpentry)
+    * [ArpEntryConnection](#arpentryconnection)
     * [AsPath](#aspath)
     * [AttrSet](#attrset)
+    * [Bgp](#bgp)
+    * [BgpNeighbor](#bgpneighbor)
     * [BgpRib](#bgprib)
     * [Bridge](#bridge)
     * [Device](#device)
     * [Ethernet](#ethernet)
     * [Iface](#iface)
+    * [IfaceIpv4Info](#ifaceipv4info)
+    * [IfaceIpv6Info](#ifaceipv6info)
     * [IfaceSubIface](#ifacesubiface)
     * [IpEntry](#ipentry)
     * [IpEntryConnection](#ipentryconnection)
     * [IpUnicast](#ipunicast)
     * [Ipv4Address](#ipv4address)
-    * [Ipv4Addresses](#ipv4addresses)
     * [Ipv6Address](#ipv6address)
-    * [Ipv6Addresses](#ipv6addresses)
+    * [MacEntry](#macentry)
+    * [MacEntryConnection](#macentryconnection)
+    * [MacEntryInterfaceInfo](#macentryinterfaceinfo)
     * [NetworkInstance](#networkinstance)
+    * [NetworkInstanceFdb](#networkinstancefdb)
+    * [NetworkInstanceProtocol](#networkinstanceprotocol)
     * [NextHop](#nexthop)
     * [PageInfo](#pageinfo)
     * [PhysicalLink](#physicallink)
@@ -48,14 +57,20 @@
     * [VlanIdSetOrAllALL](#vlanidsetorallall)
     * [VlanIdSetOrAllIDS](#vlanidsetorallids)
     * [VlanPair](#vlanpair)
+  * [Inputs](#inputs)
+    * [NullableRouteDistinguisher](#nullableroutedistinguisher)
+    * [NullableVlan](#nullablevlan)
+    * [NullableVrf](#nullablevrf)
   * [Enums](#enums)
     * [AdminStatus](#adminstatus)
     * [AfiSafiNeighborState](#afisafineighborstate)
     * [AfiSafiType](#afisafitype)
     * [AsType](#astype)
+    * [BgpSessionState](#bgpsessionstate)
     * [DuplexMode](#duplexmode)
     * [EncapsulationHeaderType](#encapsulationheadertype)
     * [IfaceType](#ifacetype)
+    * [MacEntryType](#macentrytype)
     * [NetworkInstanceType](#networkinstancetype)
     * [NextHopType](#nexthoptype)
     * [OS](#os)
@@ -63,6 +78,7 @@
     * [Origin](#origin)
     * [OriginProtocol](#originprotocol)
     * [PortSpeed](#portspeed)
+    * [RoutingProtocolType](#routingprotocoltype)
     * [SubInterfaceVlanType](#subinterfacevlantype)
     * [Vendor](#vendor)
     * [VlanIdOrRangeType](#vlanidorrangetype)
@@ -175,7 +191,7 @@
 <td valign="top"><a href="#afisafineighboradjrib">AfiSafiNeighborAdjRib</a></td>
 <td>
 
- This is a per-neighbor table containing the routes received from the neighbor that are eligible for best-path selection after local input policy rules have been applied. Note that on some platforms, these routes may not show import policy modifications.
+ This is a per-neighbor table containing the routes received from the neighbor that are eligible for best-path selection after local input policy rules have been applied. Only available on JunOs, IOS, IOS-XE, NX-OS, and IOS-XR. Note that on some platforms, these routes may not show import policy modifications.
 
 </td>
 </tr>
@@ -184,7 +200,7 @@
 <td valign="top"><a href="#afisafineighboradjrib">AfiSafiNeighborAdjRib</a></td>
 <td>
 
- Per-neighbor table containing paths eligble for sending (advertising) to the neighbor after output policy rules have been applied.
+ Per-neighbor table containing paths eligble for sending (advertising) to the neighbor after output policy rules have been applied. Only available on JunOs, IOS, IOS-XE, NX-OS, and IOS-XR.
 
 </td>
 </tr>
@@ -204,12 +220,18 @@
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>state</strong></td>
+<td colspan="2" valign="top"><strong>state</strong> ⚠️</td>
 <td valign="top"><a href="#afisafineighborstate">AfiSafiNeighborState</a>!</td>
 <td>
 
  Operational state of neighbor (peer).
 
+<p>⚠️ <strong>DEPRECATED</strong></p>
+<blockquote>
+
+Use sessionState in BgpNeighbor type under networkInstances protocols. May be removed after 2019-09-01.
+
+</blockquote>
 </td>
 </tr>
 <tr>
@@ -217,9 +239,19 @@
 <td valign="top"><a href="#routeconnection">RouteConnection</a>!</td>
 <td>
 
- List of routes in the table, keyed by the route prefix.
+ List of routes in the table, keyed by vrf, route distinguisher and route prefix.
 
 </td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">vrf</td>
+<td valign="top"><a href="#nullablevrf">NullableVrf</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">routeDistinguisher</td>
+<td valign="top"><a href="#nullableroutedistinguisher">NullableRouteDistinguisher</a></td>
+<td></td>
 </tr>
 <tr>
 <td colspan="2" align="right" valign="top">prefix</td>
@@ -307,6 +339,64 @@
 <tr>
 <td colspan="2" valign="top"><strong>switchedVlan</strong></td>
 <td valign="top"><a href="#switchedvlan">SwitchedVlan</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### ArpEntry
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>ip</strong></td>
+<td valign="top"><a href="#ipaddress">IpAddress</a>!</td>
+<td>
+
+ The IPv4 address of the neighbor node.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>linkLayerAddress</strong></td>
+<td valign="top"><a href="#macaddress">MacAddress</a>!</td>
+<td>
+
+ The link-layer address of the neighbor node.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### ArpEntryConnection
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>items</strong></td>
+<td valign="top">[<a href="#arpentry">ArpEntry</a>]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -413,6 +503,86 @@
 
 </td>
 </tr>
+<tr>
+<td colspan="2" valign="top"><strong>activeRoute</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+ Whether path is active.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### Bgp
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>neighbors</strong></td>
+<td valign="top">[<a href="#bgpneighbor">BgpNeighbor</a>]!</td>
+<td>
+
+ List of BGP neighbors configured on the local system, uniquely identified by peer IPv4 or IPv6 address.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">neighborAddress</td>
+<td valign="top"><a href="#ipaddress">IpAddress</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### BgpNeighbor
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>neighborAddress</strong></td>
+<td valign="top"><a href="#ipaddress">IpAddress</a>!</td>
+<td>
+
+ Address of the BGP peer, either in IPv4 or IPv6
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>sessionState</strong></td>
+<td valign="top"><a href="#bgpsessionstate">BgpSessionState</a></td>
+<td>
+
+ Operational state of the BGP peer. Null if enabled is false or if the data is not available.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>enabled</strong></td>
+<td valign="top"><a href="#boolean">Boolean</a>!</td>
+<td>
+
+ Whether the BGP peer is enabled. In cases where enabled is false, the local system does not initiate connections to the neighbor, and does not respond to TCP connections attempts from the neighbor.
+
+</td>
+</tr>
 </tbody>
 </table>
 
@@ -472,7 +642,7 @@
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ipv4</strong></td>
-<td valign="top"><a href="#ipv4addresses">Ipv4Addresses</a>!</td>
+<td valign="top"><a href="#ifaceipv4info">IfaceIpv4Info</a>!</td>
 <td>
 
  The IPv4 addresses configured on the bridge interface.
@@ -481,7 +651,7 @@
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ipv6</strong></td>
-<td valign="top"><a href="#ipv6addresses">Ipv6Addresses</a>!</td>
+<td valign="top"><a href="#ifaceipv6info">IfaceIpv6Info</a>!</td>
 <td>
 
  The IPv6 addresses configured on the bridge interface.
@@ -761,6 +931,108 @@
 </tbody>
 </table>
 
+### IfaceIpv4Info
+
+ The IPv4 addresses configured on an interface.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>addresses</strong></td>
+<td valign="top">[<a href="#ipv4address">Ipv4Address</a>]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>fhrpAddresses</strong></td>
+<td valign="top">[<a href="#ipv4address">Ipv4Address</a>]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>neighborsPage</strong></td>
+<td valign="top"><a href="#arpentryconnection">ArpEntryConnection</a>!</td>
+<td>
+
+ IPv4 address and link-layer address of neighbors discovered on this interface.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">ip</td>
+<td valign="top"><a href="#ipaddress">IpAddress</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### IfaceIpv6Info
+
+ The IPv6 addresses configured on an interface.
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>addresses</strong></td>
+<td valign="top">[<a href="#ipv6address">Ipv6Address</a>]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>fhrpAddresses</strong></td>
+<td valign="top">[<a href="#ipv6address">Ipv6Address</a>]!</td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>neighborsPage</strong></td>
+<td valign="top"><a href="#arpentryconnection">ArpEntryConnection</a>!</td>
+<td>
+
+ IPv6 address and link-layer address of neighbors discovered on this interface.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">ip</td>
+<td valign="top"><a href="#ipaddress">IpAddress</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
 ### IfaceSubIface
 
  The names of the interface and subinterface that are associated with the network instance.
@@ -776,13 +1048,37 @@
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>interfaceName</strong></td>
+<td colspan="2" valign="top"><strong>interfaceName</strong> ⚠️</td>
 <td valign="top"><a href="#string">String</a>!</td>
+<td>
+<p>⚠️ <strong>DEPRECATED</strong></p>
+<blockquote>
+
+Use name in iface field. May be removed after 2019-06-01
+
+</blockquote>
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>subInterfaceName</strong> ⚠️</td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+<p>⚠️ <strong>DEPRECATED</strong></p>
+<blockquote>
+
+Use name in subIface field. May be removed after 2019-06-01
+
+</blockquote>
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>iface</strong></td>
+<td valign="top"><a href="#iface">Iface</a>!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>subInterfaceName</strong></td>
-<td valign="top"><a href="#string">String</a></td>
+<td colspan="2" valign="top"><strong>subIface</strong></td>
+<td valign="top"><a href="#subinterface">SubInterface</a></td>
 <td></td>
 </tr>
 </tbody>
@@ -918,33 +1214,6 @@
 </tbody>
 </table>
 
-### Ipv4Addresses
-
- The IPv4 addresses configured on an interface.
-
-<table>
-<thead>
-<tr>
-<th align="left">Field</th>
-<th align="right">Argument</th>
-<th align="left">Type</th>
-<th align="left">Description</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td colspan="2" valign="top"><strong>addresses</strong></td>
-<td valign="top">[<a href="#ipv4address">Ipv4Address</a>]!</td>
-<td></td>
-</tr>
-<tr>
-<td colspan="2" valign="top"><strong>fhrpAddresses</strong></td>
-<td valign="top">[<a href="#ipv4address">Ipv4Address</a>]!</td>
-<td></td>
-</tr>
-</tbody>
-</table>
-
 ### Ipv6Address
 
 <table>
@@ -978,9 +1247,7 @@
 </tbody>
 </table>
 
-### Ipv6Addresses
-
- The IPv6 addresses configured on an interface.
+### MacEntry
 
 <table>
 <thead>
@@ -993,14 +1260,98 @@
 </thead>
 <tbody>
 <tr>
-<td colspan="2" valign="top"><strong>addresses</strong></td>
-<td valign="top">[<a href="#ipv6address">Ipv6Address</a>]!</td>
+<td colspan="2" valign="top"><strong>macAddress</strong></td>
+<td valign="top"><a href="#macaddress">MacAddress</a>!</td>
+<td>
+
+ MAC address for the dynamic or static MAC table entry.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>vlan</strong></td>
+<td valign="top"><a href="#vlanid">VlanId</a></td>
+<td>
+
+ VLAN from which this MAC address was received.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>interfaces</strong></td>
+<td valign="top">[<a href="#macentryinterfaceinfo">MacEntryInterfaceInfo</a>]!</td>
+<td>
+
+ Information of interfaces/subinterfaces at which this MAC address was learned.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>entryType</strong></td>
+<td valign="top"><a href="#macentrytype">MacEntryType</a>!</td>
+<td>
+
+ Type of MAC entry.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### MacEntryConnection
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>items</strong></td>
+<td valign="top">[<a href="#macentry">MacEntry</a>]!</td>
 <td></td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>fhrpAddresses</strong></td>
-<td valign="top">[<a href="#ipv6address">Ipv6Address</a>]!</td>
+<td colspan="2" valign="top"><strong>pageInfo</strong></td>
+<td valign="top"><a href="#pageinfo">PageInfo</a>!</td>
 <td></td>
+</tr>
+</tbody>
+</table>
+
+### MacEntryInterfaceInfo
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>interfaceName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+ Interface at which the MAC entry is learned.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>subinterfaceName</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+ Subinterface at which the MAC entry is learned.
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -1066,6 +1417,106 @@
 <td colspan="2" align="right" valign="top">vlanId</td>
 <td valign="top"><a href="#vlanid">VlanId</a></td>
 <td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>protocols</strong></td>
+<td valign="top">[<a href="#networkinstanceprotocol">NetworkInstanceProtocol</a>]!</td>
+<td>
+
+ The routing protocols that are enabled for this network instance.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">identifier</td>
+<td valign="top"><a href="#routingprotocoltype">RoutingProtocolType</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>fdb</strong></td>
+<td valign="top"><a href="#networkinstancefdb">NetworkInstanceFdb</a>!</td>
+<td>
+
+ Forwarding database for this network instance.
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### NetworkInstanceFdb
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>macEntriesPage</strong></td>
+<td valign="top"><a href="#macentryconnection">MacEntryConnection</a>!</td>
+<td>
+
+ Learned MAC addresses. Present only in default network instance.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">macAddress</td>
+<td valign="top"><a href="#macaddress">MacAddress</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">vlan</td>
+<td valign="top"><a href="#nullablevlan">NullableVlan</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">first</td>
+<td valign="top"><a href="#int">Int</a></td>
+<td></td>
+</tr>
+<tr>
+<td colspan="2" align="right" valign="top">after</td>
+<td valign="top"><a href="#string">String</a></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### NetworkInstanceProtocol
+
+<table>
+<thead>
+<tr>
+<th align="left">Field</th>
+<th align="right">Argument</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>identifier</strong></td>
+<td valign="top"><a href="#routingprotocoltype">RoutingProtocolType</a>!</td>
+<td>
+
+ The protocol identifier for the instance
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>bgp</strong></td>
+<td valign="top"><a href="#bgp">Bgp</a></td>
+<td>
+
+ Top-level configuration and state for the BGP router. Present if identifer is BGP.
+
+</td>
 </tr>
 </tbody>
 </table>
@@ -1294,6 +1745,24 @@ Use name in iface link. May be removed after 2019-06-01
 </thead>
 <tbody>
 <tr>
+<td colspan="2" valign="top"><strong>vrf</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+ Vrf for the route; may be undefined for route-reflector routes.
+
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>routeDistinguisher</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+ Route distinguisher for the route; may be undefined for some AfiSafis.
+
+</td>
+</tr>
+<tr>
 <td colspan="2" valign="top"><strong>prefix</strong></td>
 <td valign="top"><a href="#ipsubnet">IpSubnet</a>!</td>
 <td>
@@ -1303,20 +1772,41 @@ Use name in iface link. May be removed after 2019-06-01
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>activeRoute</strong></td>
+<td colspan="2" valign="top"><strong>activeRoute</strong> ⚠️</td>
 <td valign="top"><a href="#boolean">Boolean</a>!</td>
 <td>
 
  Whether route is active.
 
+<p>⚠️ <strong>DEPRECATED</strong></p>
+<blockquote>
+
+Use activeRoute on pathAttributes elements. May be removed after 2020-02-01.
+
+</blockquote>
 </td>
 </tr>
 <tr>
-<td colspan="2" valign="top"><strong>attributes</strong></td>
+<td colspan="2" valign="top"><strong>attributes</strong> ⚠️</td>
 <td valign="top"><a href="#attrset">AttrSet</a>!</td>
 <td>
 
  Attributes for the route.
+
+<p>⚠️ <strong>DEPRECATED</strong></p>
+<blockquote>
+
+Use pathAttributes. May be removed after 2020-02-01.
+
+</blockquote>
+</td>
+</tr>
+<tr>
+<td colspan="2" valign="top"><strong>pathAttributes</strong></td>
+<td valign="top">[<a href="#attrset">AttrSet</a>]!</td>
+<td>
+
+ Attributes for paths for the route. More than one path may exist if multipath BGP is used.
 
 </td>
 </tr>
@@ -1371,12 +1861,12 @@ Use name in iface link. May be removed after 2019-06-01
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ipv4</strong></td>
-<td valign="top"><a href="#ipv4addresses">Ipv4Addresses</a>!</td>
+<td valign="top"><a href="#ifaceipv4info">IfaceIpv4Info</a>!</td>
 <td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ipv6</strong></td>
-<td valign="top"><a href="#ipv6addresses">Ipv6Addresses</a>!</td>
+<td valign="top"><a href="#ifaceipv6info">IfaceIpv6Info</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -1439,7 +1929,7 @@ Use name in iface link. May be removed after 2019-06-01
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ipv4</strong></td>
-<td valign="top"><a href="#ipv4addresses">Ipv4Addresses</a>!</td>
+<td valign="top"><a href="#ifaceipv4info">IfaceIpv4Info</a>!</td>
 <td>
 
  Configuration and state for IPv4 interfaces.
@@ -1448,7 +1938,7 @@ Use name in iface link. May be removed after 2019-06-01
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ipv6</strong></td>
-<td valign="top"><a href="#ipv6addresses">Ipv6Addresses</a>!</td>
+<td valign="top"><a href="#ifaceipv6info">IfaceIpv6Info</a>!</td>
 <td>
 
  Configuration and state for IPv6 interfaces.
@@ -1709,12 +2199,12 @@ Use name in iface link. May be removed after 2019-06-01
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ipv4</strong></td>
-<td valign="top"><a href="#ipv4addresses">Ipv4Addresses</a>!</td>
+<td valign="top"><a href="#ifaceipv4info">IfaceIpv4Info</a>!</td>
 <td></td>
 </tr>
 <tr>
 <td colspan="2" valign="top"><strong>ipv6</strong></td>
-<td valign="top"><a href="#ipv6addresses">Ipv6Addresses</a>!</td>
+<td valign="top"><a href="#ifaceipv6info">IfaceIpv6Info</a>!</td>
 <td></td>
 </tr>
 </tbody>
@@ -1906,6 +2396,83 @@ Use name in iface link. May be removed after 2019-06-01
 </tbody>
 </table>
 
+## Inputs
+
+### NullableRouteDistinguisher
+
+ Route distinguisher for the route; may be undefined for some AfiSafis.
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>value</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+ null matches on values with undefined value for routeDistinguisher
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### NullableVlan
+
+ VLAN from which this MAC address was received.
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>value</strong></td>
+<td valign="top"><a href="#vlanid">VlanId</a></td>
+<td>
+
+ null matches on values with undefined value for vlan
+
+</td>
+</tr>
+</tbody>
+</table>
+
+### NullableVrf
+
+ Vrf for the route; may be undefined for route-reflector routes.
+
+<table>
+<thead>
+<tr>
+<th colspan="2" align="left">Field</th>
+<th align="left">Type</th>
+<th align="left">Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td colspan="2" valign="top"><strong>value</strong></td>
+<td valign="top"><a href="#string">String</a></td>
+<td>
+
+ null matches on values with undefined value for vrf
+
+</td>
+</tr>
+</tbody>
+</table>
+
 ## Enums
 
 ### AdminStatus
@@ -1979,11 +2546,35 @@ Use name in iface link. May be removed after 2019-06-01
 </thead>
 <tbody>
 <tr>
+<td valign="top"><strong>IPV4_LABELED_UNICAST</strong></td>
+<td></td>
+</tr>
+<tr>
 <td valign="top"><strong>IPV4_UNICAST</strong></td>
 <td></td>
 </tr>
 <tr>
+<td valign="top"><strong>IPV6_LABELED_UNICAST</strong></td>
+<td></td>
+</tr>
+<tr>
 <td valign="top"><strong>IPV6_UNICAST</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>L3VPN_IPV4_MULTICAST</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>L3VPN_IPV4_UNICAST</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>L3VPN_IPV6_MULTICAST</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>L3VPN_IPV6_UNICAST</strong></td>
 <td></td>
 </tr>
 </tbody>
@@ -1999,6 +2590,41 @@ Use name in iface link. May be removed after 2019-06-01
 <tbody>
 <tr>
 <td valign="top"><strong>AS_SEQ</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### BgpSessionState
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>ACTIVE</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>CONNECT</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>ESTABLISHED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>IDLE</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>OPENCONFIRM</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>OPENSENT</strong></td>
 <td></td>
 </tr>
 </tbody>
@@ -2108,6 +2734,25 @@ Use name in iface link. May be removed after 2019-06-01
 </tr>
 <tr>
 <td valign="top"><strong>IF_TUNNEL_VXLAN</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
+### MacEntryType
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>DYNAMIC</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>STATIC</strong></td>
 <td></td>
 </tr>
 </tbody>
@@ -2502,6 +3147,55 @@ Use name in iface link. May be removed after 2019-06-01
 </tbody>
 </table>
 
+### RoutingProtocolType
+
+ Type for routing protocols, including those which may install prefixes into the RIB
+
+<table>
+<thead>
+<th align="left">Value</th>
+<th align="left">Description</th>
+</thead>
+<tbody>
+<tr>
+<td valign="top"><strong>BGP</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>DIRECTLY_CONNECTED</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>IGMP</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>ISIS</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>LOCAL_AGGREGATE</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>OSPF</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>OSPF3</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>PIM</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>STATIC</strong></td>
+<td></td>
+</tr>
+</tbody>
+</table>
+
 ### SubInterfaceVlanType
 
 <table>
@@ -2543,6 +3237,10 @@ Use name in iface link. May be removed after 2019-06-01
 </tr>
 <tr>
 <td valign="top"><strong>AVI_NETWORKS</strong></td>
+<td></td>
+</tr>
+<tr>
+<td valign="top"><strong>AZURE</strong></td>
 <td></td>
 </tr>
 <tr>
