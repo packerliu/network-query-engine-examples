@@ -1,4 +1,3 @@
-
 # Network Query Engine Examples [![Build Status](https://travis-ci.com/forwardnetworks/network-query-engine-examples.svg?token=F2RHJ9964SXT8kpW4Ns5&branch=master)](https://travis-ci.com/forwardnetworks/network-query-engine-examples)
 
 Network Query Engine (NQE) by Forward Networks provides information about the network as JSON data in a fully-parsed form.
@@ -77,7 +76,7 @@ The GraphQL schema can be [imported manually](https://learning.getpostman.com/do
 
 The schema in SDL format can be exported from the Forward Platform using tools like [get-graphql-schema](https://www.npmjs.com/package/get-graphql-schema) or by running the following Introspection query in the [Network Query Explorer](https://fwd.app/network-query-explorer) and converting the JSON output to the SDL format using tools like [graphql-introspection-json-to-sdl](https://www.npmjs.com/package/graphql-introspection-json-to-sdl):
 
-You can find the Forward GraphQL Schema [here](graphql-schema).
+You can find the Forward GraphQL Schema [here](graphql-schema.md).
 
 The picture below shows a simple query to get device platform details:
 ![NQE Postman](/images/nqe-postman.png?width=800px)
@@ -88,13 +87,13 @@ prettier data visualization.
 # Examples
 
 The repository provides the following example queries and scripts:
-* [Show names of all devices.](examples/show_all_device_names.py) This is a simple example to simply list all devices
+* [Show names of all devices.](examples/show_all_device_names.md) This is a simple example to simply list all devices
 in a network.
-* [Show unique platforms.](examples/show_unique_platforms.py) This script shows the unique Vendor, model, and OS combinations in a network.
-* [Find interfaces with clashing configured and operational status.](examples/mismatched_interfaces.py) Interfaces can
+* [Show unique platforms.](examples/show_unique_platforms.md) This script shows the unique Vendor, model, and OS combinations in a network.
+* [Find interfaces with clashing configured and operational status.](examples/mismatched_interfaces.md) Interfaces can
 be configured up, but can be operationally down for a variety of reasons. This script finds cases where the states
 differ, so that an operator can do further investigation.
-* [Find IP addresses that are assigned to more than one interface within a VRF.](examples/ip_uniqueness.py) Assigning
+* [Find IP addresses that are assigned to more than one interface within a VRF.](examples/ip_uniqueness.md) Assigning
 a single IP address to multiple interfaces in a network can often lead to problems. This script queries Forward Networks
 NQE and finds all violations of this problem, showing the interfaces on which each duplicate IP address is assigned.
 
