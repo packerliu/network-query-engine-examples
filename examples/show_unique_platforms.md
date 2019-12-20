@@ -6,6 +6,8 @@ Find unique Vendor, Model, OS combinations in a network snapshot
 
 ## Query
 
+The following query shows only how to get all the platform vendor, model and osVersion. To find the unique Vendor, Model, OS combinations you need to execute the Python script.
+
 ```
 {
   devices{
@@ -22,4 +24,4 @@ Find unique Vendor, Model, OS combinations in a network snapshot
 [Show Unique Platforms](show_unique_platforms.py)
 
 ## Sample output
-![Unique Platforms](/images/ip_uniqueness.png?width=800px&classes=shadow)
+![Unique Platforms](/images/show_unique_platforms.png?width=800px&classes=shadow)
