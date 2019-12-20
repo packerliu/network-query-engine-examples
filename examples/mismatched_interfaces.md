@@ -7,6 +7,9 @@ This script finds cases where the states differ, so that an operator can do furt
 
 ## Query
 
+The following query shows only how to get the interfaces adminStatus and operStatus.
+To find the interfaces with clashing configured and operational status you need to execute the Python script.
+
 ```
 {
   devices {
@@ -22,3 +25,6 @@ This script finds cases where the states differ, so that an operator can do furt
 
 ## Python Script
 [Find interfaces with clashing configured and operational status](mismatched_interfaces.py)
+
+## Sample output
+![Mismatched Interfaces](/images/mismatched_interfaces.png?width=800px&classes=shadow)

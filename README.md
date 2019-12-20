@@ -13,12 +13,14 @@ Finally, it provides all the information needed to configure and use Postman as 
 
 If you'd like to start out with more background on NQE, please check out this [blog post](https://www.forwardnetworks.com/blog/network-query-engine) or the [network-query-engine](https://github.com/forwardnetworks/network-query-engine) repository.
 
+Check also the [in-app-network-query-engine-examples](https://github.com/forwardnetworks/in-app-NQE-checks-examples) repository for more information on In-App NQE Checks and a set of examples.
+
 # Getting Started
 
 You can use any GraphQL client to consume NQE data.  
 To get started you can use one of these options:
 * [Try Queries on the Demo Network](#demo-network)
-* [Use the Sample Python NQE Client](#nqe-client)
+* [Use the Sample Python NQE Client](#python)
 * [Use Postman](#postman)
 
 <a id="demo-network"></a>
@@ -50,7 +52,7 @@ documentation, by opening the "Docs" pane in the top-right-hand side toolbar.
 Note that you can try out these queries against your own network snapshot by choosing the appropriate network and
 snapshot on the query window.
 
-<a id="nqe-client"></a>
+<a id="python"></a>
 ## Use the Sample Python NQE Client
 
 This repository includes a simple client library that can be used to run queries. The library is verified to work on
@@ -66,6 +68,10 @@ Now you can run the examples in the examples/ directory. For example, in the exa
 ```
 python mismatched_interfaces.py https://fwd.app <yourUsername> <yourPassword> <yourSnapshotId>
 ```
+
+You should see the following output:
+![Mismatched Interfaces](/images/mismatched_interfaces.png?width=800px)
+
 <a id="postman"></a>
 ## Use Postman
 
@@ -87,15 +93,16 @@ prettier data visualization.
 # Examples
 
 The repository provides the following example queries and scripts:
-* [Show names of all devices.](examples/show_all_device_names.md) This is a simple example to simply list all devices
-in a network.
-* [Show unique platforms.](examples/show_unique_platforms.md) This script shows the unique Vendor, model, and OS combinations in a network.
-* [Find interfaces with clashing configured and operational status.](examples/mismatched_interfaces.md) Interfaces can
-be configured up, but can be operationally down for a variety of reasons. This script finds cases where the states
-differ, so that an operator can do further investigation.
-* [Find IP addresses that are assigned to more than one interface within a VRF.](examples/ip_uniqueness.md) Assigning
-a single IP address to multiple interfaces in a network can often lead to problems. This script queries Forward Networks
-NQE and finds all violations of this problem, showing the interfaces on which each duplicate IP address is assigned.
+* [Show All Device Names](examples/show_all_device_names.md). This is a simple example to list all devices in a network.
+* [Show Unique Platforms](examples/show_unique_platforms.md). This script shows the unique Vendor, model, and OS combinations in a network.
+* [Show MAC Table](examples/show_mac_table.md). This script prints the MAC table of all devices in a network snapshot.
+* [Show ARP Table](examples/show_arp_table.md). This script prints the IPv4 ARP table of all devices in a network snapshot.
+* [Find interfaces with clashing configured and operational status](examples/mismatched_interfaces.md).
+   Interfaces can be configured up, but can be operationally down for a variety of reasons.
+  This script finds cases where the states differ, so that an operator can do further investigation.
+* [Find IP addresses that are assigned to more than one interface within a VRF](examples/ip_uniqueness.md).
+   Assigning a single IP address to multiple interfaces in a network can often lead to problems.
+   This script queries Forward Networks NQE and finds all violations of this problem, showing the interfaces on which each duplicate IP address is assigned.
 
 # API Details
 
@@ -123,10 +130,10 @@ We welcome contributions! Please submit and share scripts, queries, and examples
 are also welcome. To contribute, fork the repository, push your work to a branch in that repository and then submit a
 pull request. Specifically, do:
 
-1. Fork this repo
-2. Clone your forked repo
-2. In your forked repo, create your feature branch (`git checkout -b my-feature`)
-3. Push to the new branch of your forked repo: (`git push origin my-feature`)
+1. Fork this repository
+2. Clone your forked repository
+2. In your forked repository, create your feature branch (`git checkout -b my-feature`)
+3. Push to the new branch of your forked repository: (`git push origin my-feature`)
 4. Create new Pull Request
 
 ## Contact
@@ -137,3 +144,5 @@ pull request. Specifically, do:
 
 * [Product docs](https://app.forwardnetworks.com/docs/applications/data_model_export/)
 * [Network Query Engine Blog Post](https://www.forwardnetworks.com/blog/network-query-engine)
+* [Network Query Engine main repository](https://github.com/forwardnetworks/network-query-engine)
+* [In-App NQE Checks Examples](https://github.com/forwardnetworks/in-app-NQE-checks-examples)

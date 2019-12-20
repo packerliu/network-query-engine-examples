@@ -44,3 +44,6 @@ problem, showing the interfaces on which each duplicate IP address is assigned.
 
 ## Python Script
 [Find IP addresses that are assigned to more than one interface within a VRF](ip_uniqueness.py)
+
+## Sample output
+![IP Uniqueness](/images/ip_uniqueness.png?width=800px&classes=shadow)
