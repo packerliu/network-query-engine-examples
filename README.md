@@ -2,18 +2,15 @@
 
 Network Query Engine (NQE) by Forward Networks provides information about the network as JSON data in a fully-parsed form.
 The information is normalized and presented uniformly across devices from different vendors.
-The exported data structures are standards-aligned with [OpenConfig](http://www.openconfig.net/) (details below), and all data is available through a [GraphQL](#graphql) API as well as custom verification checks directly in the Forward Enterprise browser-based interface ([In-App NQE Checks](#in-app-nqe-checks)).
+The exported data structures are standards-aligned with [OpenConfig](http://www.openconfig.net/) (details below), and all data is available through a [GraphQL](#graphql) API as well as custom verification checks directly in the Forward Enterprise browser-based interface (In-App NQE Checks).
 
 This repository helps you get started with the NQE GraphQL interface.
+The main NQE repository containing general/common info/background on NQE is [here](https://github.com/forwardnetworks/network-query-engine) while the repository containing in-app NQE Checks information and a set of examples is [here](https://github.com/forwardnetworks/in-app-NQE-checks-examples).
 
-In particular, it walks you through the process of interactively crafting queries against a Forward Networks instance and explains the request and response structure of the API.
+In particular, this repository walks you through the process of interactively crafting queries against a Forward Networks instance and explains the request and response structure of the API.
 This repository also includes a simple Python client library that you can use to write Python scripts that query and consume NQE data.
 This README describes how to install that library and provides example scripts that use this client library in interesting ways.
 Finally, it provides all the information needed to configure and use Postman as GraphQL client.
-
-If you'd like to start out with more background on NQE, please check out this [blog post](https://www.forwardnetworks.com/blog/network-query-engine) or the [network-query-engine](https://github.com/forwardnetworks/network-query-engine) repository.
-
-Check also the [in-app-network-query-engine-examples](https://github.com/forwardnetworks/in-app-NQE-checks-examples) repository for more information on In-App NQE Checks and a set of examples.
 
 # Getting Started
 
@@ -80,9 +77,7 @@ Unfortunately, it doesn't support GraphQL Introspection, a key feature that allo
 
 The GraphQL schema can be [imported manually](https://learning.getpostman.com/docs/postman/sending_api_requests/graphql/#importing-graphql-schemas) instead, providing autocomplete but no documentation. [GraphQL Schema Definition Language](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51) (SDL) is the only format supported.
 
-The schema in SDL format can be exported from the Forward Platform using tools like [get-graphql-schema](https://www.npmjs.com/package/get-graphql-schema) or by running the following Introspection query in the [Network Query Explorer](https://fwd.app/network-query-explorer) and converting the JSON output to the SDL format using tools like [graphql-introspection-json-to-sdl](https://www.npmjs.com/package/graphql-introspection-json-to-sdl):
-
-You can find the Forward GraphQL Schema [here](graphql-schema.md).
+The schema in SDL format can be exported from the Forward Platform using tools like [get-graphql-schema](https://www.npmjs.com/package/get-graphql-schema) or by running this [Introspection query](graphql-introspection-query.md) in the [Network Query Explorer](https://fwd.app/network-query-explorer) and converting the JSON output to the SDL format using tools like [graphql-introspection-json-to-sdl](https://www.npmjs.com/package/graphql-introspection-json-to-sdl):
 
 The picture below shows a simple query to get device platform details:
 ![NQE Postman](/images/nqe-postman.png?width=800px)
