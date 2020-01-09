@@ -1,13 +1,12 @@
 language: python
 python:
-  - 2.6
   - 2.7
   - 3.4
   - 3.5
   - 3.6
 script:
-  - pep8 test/ examples/
-  - pytest
+  - 'if [ "$TRAVIS_PULL_REQUEST" != "false" ]; then pep8 test/ examples/; fi'
+  - 'if [ "$TRAVIS_PULL_REQUEST" = "false" ]; then pytest; fi'
 install:
   - pip install -r requirements.txt .
   - pip install pep8
