@@ -1,27 +1,23 @@
-
 # Network Query Engine Examples [![Build Status](https://travis-ci.com/forwardnetworks/network-query-engine-examples.svg?token=F2RHJ9964SXT8kpW4Ns5&branch=master)](https://travis-ci.com/forwardnetworks/network-query-engine-examples)
 
-Network Query Engine (NQE) by Forward Networks provides a simple API that exposes information about the network as JSON data in a
-fully-parsed form. The information is normalized and presented uniformly across devices from different vendors. The
-exported data structures are standards-aligned with [OpenConfig](http://www.openconfig.net/) (details below), and
-all data is available through a [GraphQL](https://graphql.org/) API. This API allows network operators to
-easily develop scripts - for example, to perform sanity checks or to display information - that work across the entire
-fleet of devices in their network.
+Network Query Engine (NQE) by Forward Networks provides information about the network as JSON data in a fully-parsed form.
+The information is normalized and presented uniformly across devices from different vendors.
+The exported data structures are standards-aligned with [OpenConfig](http://www.openconfig.net/) (details below), and all data is available through a [GraphQL](#graphql) API as well as custom verification checks directly in the Forward Enterprise browser-based interface (In-App NQE Checks).
 
-This repository helps you get started with NQE. In particular, it walks you through the process of
-interactively crafting queries against a Forward Networks instance and explains the request and response structure of the
-API. This repository also includes a simple Python client library that you can use to write Python scripts that query
-and consume NQE data. This README describes how to install that library and provides example scripts that use this
-client library in interesting ways.
+This repository helps you get started with the NQE GraphQL interface.
+The main NQE repository containing general/common info/background on NQE is [here](https://github.com/forwardnetworks/network-query-engine) while the repository containing in-app NQE Checks information and a set of examples is [here](https://github.com/forwardnetworks/in-app-NQE-checks-examples).
 
-If you'd like to start out with more background on NQE, please check out [this blog post](https://www.forwardnetworks.com/blog/network-query-engine).
+In particular, this repository walks you through the process of interactively crafting queries against a Forward Networks instance and explains the request and response structure of the API.
+This repository also includes a simple Python client library that you can use to write Python scripts that query and consume NQE data.
+This README describes how to install that library and provides example scripts that use this client library in interesting ways.
+Finally, it provides all the information needed to configure and use Postman as GraphQL client.
 
 # Getting Started
 
-You can use any GraphQL client to consume NQE data.
+You can use any GraphQL client to consume NQE data.  
 To get started you can use one of these options:
 * [Try Queries on the Demo Network](#demo-network)
-* [Use the Sample Python NQE Client](#nqe-client)
+* [Use the Sample Python NQE Client](#python)
 * [Use Postman](#postman)
 
 <a id="demo-network"></a>
@@ -43,21 +39,8 @@ running the play button:
 ```
 
 You should see output like this in the right hand-side pane, containing all the device names in the demo network:
-```
-{
-  "data": {
-    "devices": [
-      {
-        "name": "atl-app-lb01"
-      },
-      {
-        "name": "atl-ce01"
-      },
-      ...
-    ]
-  }
-}
-```
+
+![Network Query Explorer](/images/network-query-explorer.png?width=800px)
 
 You can try out other queries. The editor provides assistance via auto-complete and inline help, which you can access
 by pressing control+shift keys. In addition, you can explore the full schema, including detailed formal and informal
@@ -66,7 +49,7 @@ documentation, by opening the "Docs" pane in the top-right-hand side toolbar.
 Note that you can try out these queries against your own network snapshot by choosing the appropriate network and
 snapshot on the query window.
 
-<a id="nqe-client"></a>
+<a id="python"></a>
 ## Use the Sample Python NQE Client
 
 This repository includes a simple client library that can be used to run queries. The library is verified to work on
@@ -82,6 +65,10 @@ Now you can run the examples in the examples/ directory. For example, in the exa
 ```
 python mismatched_interfaces.py https://fwd.app <yourUsername> <yourPassword> <yourSnapshotId>
 ```
+
+You should see the following output:
+![Mismatched Interfaces](/images/mismatched_interfaces.png?width=800px)
+
 <a id="postman"></a>
 ## Use Postman
 
@@ -90,101 +77,7 @@ Unfortunately, it doesn't support GraphQL Introspection, a key feature that allo
 
 The GraphQL schema can be [imported manually](https://learning.getpostman.com/docs/postman/sending_api_requests/graphql/#importing-graphql-schemas) instead, providing autocomplete but no documentation. [GraphQL Schema Definition Language](https://www.prisma.io/blog/graphql-sdl-schema-definition-language-6755bcb9ce51) (SDL) is the only format supported.
 
-The schema in SDL format can be exported from the Forward Platform using tools like [get-graphql-schema](https://www.npmjs.com/package/get-graphql-schema) or by running the following Introspection query in the [Network Query Explorer](https://fwd.app/network-query-explorer) and converting the JSON output to the SDL format using tools like [graphql-introspection-json-to-sdl](https://www.npmjs.com/package/graphql-introspection-json-to-sdl):
-
-```
-query IntrospectionQuery {
-      __schema {
-        queryType { name }
-        mutationType { name }
-        subscriptionType { name }
-        types {
-          ...FullType
-        }
-        directives {
-          name
-          description
-          locations
-          args {
-            ...InputValue
-          }
-        }
-      }
-    }
-
-    fragment FullType on __Type {
-      kind
-      name
-      description
-      fields(includeDeprecated: true) {
-        name
-        description
-        args {
-          ...InputValue
-        }
-        type {
-          ...TypeRef
-        }
-        isDeprecated
-        deprecationReason
-      }
-      inputFields {
-        ...InputValue
-      }
-      interfaces {
-        ...TypeRef
-      }
-      enumValues(includeDeprecated: true) {
-        name
-        description
-        isDeprecated
-        deprecationReason
-      }
-      possibleTypes {
-        ...TypeRef
-      }
-    }
-
-    fragment InputValue on __InputValue {
-      name
-      description
-      type { ...TypeRef }
-      defaultValue
-    }
-
-    fragment TypeRef on __Type {
-      kind
-      name
-      ofType {
-        kind
-        name
-        ofType {
-          kind
-          name
-          ofType {
-            kind
-            name
-            ofType {
-              kind
-              name
-              ofType {
-                kind
-                name
-                ofType {
-                  kind
-                  name
-                  ofType {
-                    kind
-                    name
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-```
+The schema in SDL format can be exported from the Forward Platform using tools like [get-graphql-schema](https://www.npmjs.com/package/get-graphql-schema) or by running this [Introspection query](graphql-introspection-query.md) in the [Network Query Explorer](https://fwd.app/network-query-explorer) and converting the JSON output to the SDL format using tools like [graphql-introspection-json-to-sdl](https://www.npmjs.com/package/graphql-introspection-json-to-sdl):
 
 The picture below shows a simple query to get device platform details:
 ![NQE Postman](/images/nqe-postman.png?width=800px)
@@ -195,55 +88,16 @@ prettier data visualization.
 # Examples
 
 The repository provides the following example queries and scripts:
-* [Show names of all devices.](examples/show_all_device_names.py) This is a simple example to simply list all devices
-in a network.
-* [Show unique platforms.](examples/show_unique_platforms.py) This script shows the unique Vendor, model, and OS combinations in a network.
-* [Find interfaces with clashing configured and operational status.](examples/mismatched_interfaces.py) Interfaces can
-be configured up, but can be operationally down for a variety of reasons. This script finds cases where the states
-differ, so that an operator can do further investigation.
-* [Find IP addresses that are assigned to more than one interface within a VRF.](examples/ip_uniqueness.py) Assigning
-a single IP address to multiple interfaces in a network can often lead to problems. This script queries Forward Networks
-NQE and finds all violations of this problem, showing the interfaces on which each duplicate IP address is assigned.
-
-# Data Coverage
-
-The initial data set covered by NQE includes:
-* Basic device info including device name, vendor, platform, and os.
-* Interface data.
-* IPv4 and IPv6 RIBs across all VRFs.
-* Subset of BGP RIBs (`adj-rib-in` and `adj-rib-out`).
-* Topology data via fields that link interfaces to other connected interfaces.
-
-The [Data Model Explorer](https://fwd.app/data-model-explorer) (explained below) provided by Forward Network instances
-provides an easy to use tool to interactively view the full schema details. However, you can also
-[see the full schema offline here](network-schema.md).
-
-NQE will include more data over time. If the information that you need is not in the schema, please open
-an issue and request the data.
-
-# Relationship to OpenConfig
-
-Forward Networks NQE is *aligned* with OpenConfig, but is not literally the same data model as any of the various
-JSON representations of the OpenConfig YANG data models. Rather, Forward Networks NQE can be seen as an idiomatic
-representation of OpenConfig as a GraphQL data source: we have adapted the OpenConfig YANG data models to fit within
-the constraints of GraphQL, to adapt to the conventions prevalent within GraphQL APIs, and to take advantage of the
-powerful query features available in GraphQL.
-
-Specifically, Forward Networks NQE differs from OpenConfig models in the following ways:
-1. Names are camel-cased. Dashes are not permitted in GraphQL.
-2. The config and state hierarchy is squashed out, similar to "path-compression" in
-[ygot](https://github.com/openconfig/ygot/blob/master/docs/design.md#openconfig-path-compression).
-3. OpenConfig sometimes represents some complex entity as a string with specific format, such as vlan range in the
-`x..y` format. NQE chooses to model these as structured objects.
-4. Some collections of elements, such as BGP routes, are "paged" in NQE because they are often very large. This paging
-allows clients to ask for a page of routes at a time.
-5. Additional data is sometimes added, such as device platform information under the `platform` field of `Device`, or
-the `links` field of an interface that adds topology information to the interface object information.
-6. NQE takes advantage of GraphQL's *graph* model to provide fields on objects that link (aka *join*) to related
-information. For example, a field of an interface links to other interface to which it is connected. This field
-provides the related interface object, not just its name.
-7. Forward Networks NQE only covers a subset of OpenConfig models. [More info on included data.](#Data-Coverage)
-
+* [Show All Device Names](examples/show_all_device_names.md). This is a simple example to list all devices in a network.
+* [Show Unique Platforms](examples/show_unique_platforms.md). This script shows the unique Vendor, model, and OS combinations in a network.
+* [Show MAC Table](examples/show_mac_table.md). This script prints the MAC table of all devices in a network snapshot.
+* [Show ARP Table](examples/show_arp_table.md). This script prints the IPv4 ARP table of all devices in a network snapshot.
+* [Find interfaces with clashing configured and operational status](examples/mismatched_interfaces.md).
+   Interfaces can be configured up, but can be operationally down for a variety of reasons.
+  This script finds cases where the states differ, so that an operator can do further investigation.
+* [Find IP addresses that are assigned to more than one interface within a VRF](examples/ip_uniqueness.md).
+   Assigning a single IP address to multiple interfaces in a network can often lead to problems.
+   This script queries Forward Networks NQE and finds all violations of this problem, showing the interfaces on which each duplicate IP address is assigned.
 
 # API Details
 
@@ -271,10 +125,10 @@ We welcome contributions! Please submit and share scripts, queries, and examples
 are also welcome. To contribute, fork the repository, push your work to a branch in that repository and then submit a
 pull request. Specifically, do:
 
-1. Fork this repo
-2. Clone your forked repo
-2. In your forked repo, create your feature branch (`git checkout -b my-feature`)
-3. Push to the new branch of your forked repo: (`git push origin my-feature`)
+1. Fork this repository
+2. Clone your forked repository
+2. In your forked repository, create your feature branch (`git checkout -b my-feature`)
+3. Push to the new branch of your forked repository: (`git push origin my-feature`)
 4. Create new Pull Request
 
 ## Contact
@@ -285,3 +139,5 @@ pull request. Specifically, do:
 
 * [Product docs](https://app.forwardnetworks.com/docs/applications/data_model_export/)
 * [Network Query Engine Blog Post](https://www.forwardnetworks.com/blog/network-query-engine)
+* [Network Query Engine main repository](https://github.com/forwardnetworks/network-query-engine)
+* [In-App NQE Checks Examples](https://github.com/forwardnetworks/in-app-NQE-checks-examples)
