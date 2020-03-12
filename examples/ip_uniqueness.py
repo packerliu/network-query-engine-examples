@@ -108,9 +108,9 @@ violations = [(vrf, addr, ifaces) for (vrf, addr),
               ifaces in vrfSubnetToIfaceMap.items() if len(ifaces) > 1]
 
 if not violations:
-    print "OK"
+    print ("OK")
 else:
-    print "Found the following IP uniqueness violations:"
+    print ("Found the following IP uniqueness violations:")
     printTable(
         ["VRF", "Subnet", "Interfaces"],
         [[vrf, formatIpAddr(addr), ", ".join([dn + ':' + s

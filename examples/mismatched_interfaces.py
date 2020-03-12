@@ -57,9 +57,9 @@ violations = [(d, i)
 
 # Report the violations, if any
 if not violations:
-    print "OK"
+    print ("OK")
 else:
-    print "Interfaces with differing admin and operational states"
+    print ("Interfaces with differing admin and operational states")
     printTable(
         ["Device", "Interface", "Admin status", "Oper status"],
         [[d['name'], i['name'], i['adminStatus'], i['operStatus']]
