@@ -65,11 +65,11 @@ for device in platformDataset['devices']:
     models.add((platform['model']))
     vendors.add((platform['vendor']))
 
-print ("Number of unique vendor, model, os combinations:", len(platforms))
-print ("Number of unique OS versions:", len(osVersions))
-print ("Number of unique device models:", len(models))
-print ("Number of unique vendors:", len(vendors))
-print ("")
+print("Number of unique vendor, model, os combinations:", len(platforms))
+print("Number of unique OS versions:", len(osVersions))
+print("Number of unique device models:", len(models))
+print("Number of unique vendors:", len(vendors))
+print("")
 
 printTable(["Vendor", "Model", "Os Version"],
            [list(x) for x in sorted(platforms)])
